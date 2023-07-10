@@ -5,7 +5,7 @@ namespace gps_app.Services.Interfaces
 {
     public interface IBaseService<T, E>
     {
-        E ToDto(T entity);
+        E ToDto(T entity, bool addPagination, int page);
         T FromDto(E dto);
     }
 }

@@ -207,7 +207,7 @@ namespace gps_app.Migrations
                     b.HasOne("gps_app.Models.Device", "Device")
                         .WithMany("DeviceData")
                         .HasForeignKey("DeviceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Device");

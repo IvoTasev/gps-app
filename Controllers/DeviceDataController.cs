@@ -1,13 +1,12 @@
 ﻿using gps_app.Entities.Dtos;
 using gps_app.Models;
 using gps_app.Services.Interfaces;
-using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
 namespace gps_app.Controllers
 {
-    [Route("api/{deviceId}/data")]
+    [Route("api/devices/{deviceId}/data")]
     [ApiController]
     public class DeviceDataController : ControllerBase
     {
@@ -18,9 +17,10 @@ namespace gps_app.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<DeviceData>>> GetDataForDevice(string deviceId)
+        public async Task<ActionResult<List<DeviceData>>> GetDataForDevice(string deviceId, [FromQuery] int page = 0)
         {
-            List<DeviceDataDto> deviceData = await _deviceDataService.GetDeviceData(deviceId);
+            if (page < 0) page = 0;
+            List<DeviceDataDto> deviceData = await _deviceDataService.GetDeviceData(deviceId, page);
 
             if (deviceData.IsNullOrEmpty()) return NotFound();
 
@@ -49,6 +49,27 @@ namespace gps_app.Controllers
             }
 
             return Ok(await _deviceDataService.SaveDeviceData(deviceId, device));
+        }
+
+        [HttpDelete("{deviceDataId}")]
+        public async Task<ActionResult<Device>> DeleteDeviceData(string deviceId, string deviceDataId)
+        {
+            var result = await _deviceDataService.DeleteDeviceData(deviceId, deviceDataId);
+            if (result) return NoContent();
+            return BadRequest();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Device>> UpdateDataDevice(string deviceId, DeviceDataDto updatedDeviceData)
+        {
+            if (updatedDeviceData.Id == null || deviceId == null) return BadRequest("Device id and Device data id must be valid.");
+
+            var deviceDataDto = await _deviceDataService.UpdateDeviceData(deviceId, updatedDeviceData);
+
+            if (deviceDataDto == null) return BadRequest("Device data was not found.");
+
+            return Ok(deviceDataDto);
+
         }
     }
 }

@@ -12,7 +12,7 @@ using gps_app.Persistency;
 namespace gps_app.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230707034024_Initial")]
+    [Migration("20230709154610_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -210,7 +210,7 @@ namespace gps_app.Migrations
                     b.HasOne("gps_app.Models.Device", "Device")
                         .WithMany("DeviceData")
                         .HasForeignKey("DeviceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Device");

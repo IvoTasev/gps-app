@@ -40,5 +40,26 @@ namespace gps_app.Controllers
             }
             return Conflict("Device with id '" + device.Id + "' already exists.");
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>> DeleteDevice(string id)
+        {
+            var result = await _deviceService.DeleteDevice(id);
+            if (result) return NoContent();
+            return BadRequest();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Device>> UpdateDevice(DeviceDto updatedDevice)
+        {
+            if ( updatedDevice.Id == null) return NotFound("Device id must be valid.");
+
+            var result = await _deviceService.UpdateDevice(updatedDevice);
+
+            if (result == null) return BadRequest("Device was not found.");
+
+            return Ok(result);
+
+        }
     }
 }

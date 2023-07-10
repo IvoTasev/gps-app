@@ -4,8 +4,8 @@ namespace gps_app.Entities.Dtos
 {
     public class DeviceDataDto : BaseDto
     {
-        public required DateTime Date { get; set; }
-        public required string Location { get; set; }
-        public required string DeviceId { get; set; }
+        public DateTime? Date { get; set; }
+        public string? Location { get; set; }
+        public string? DeviceId { get; set; }
     }
 }

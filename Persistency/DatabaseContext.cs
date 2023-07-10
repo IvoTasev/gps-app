@@ -62,6 +62,7 @@ namespace gps_app.Persistency
                .HasMany(e => e.DeviceData)
                .WithOne(e => e.Device)
                .HasForeignKey(e => e.DeviceId)
+               .OnDelete(DeleteBehavior.Cascade)
                .IsRequired();
 
             modelBuilder
@@ -69,11 +70,11 @@ namespace gps_app.Persistency
                 .Property(d => d.DeviceType)
                 .HasConversion(new EnumToStringConverter<DeviceType>());
 
-
             modelBuilder.Entity<DeviceData>()
                .HasOne(e => e.Device)
                .WithMany(e => e.DeviceData)
                .HasForeignKey(e => e.DeviceId)
+               .OnDelete(DeleteBehavior.NoAction)
                .IsRequired();
         }
 

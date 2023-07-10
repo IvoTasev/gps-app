@@ -41,8 +41,7 @@ namespace gps_app.Migrations
                         name: "FK_DeviceData_Devices_DeviceId",
                         column: x => x.DeviceId,
                         principalTable: "Devices",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(

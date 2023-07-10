@@ -5,10 +5,9 @@ namespace gps_app.Entities.Dtos
 {
     public class DeviceDto : BaseDto
     {
-        public required DeviceType DeviceType { get; set; }
-        public ICollection<DeviceData> DeviceData { get; set;  } = new List<DeviceData>();
-        public int Pages { get; set; }
-        public int CurrentPage { get; set; }
+        public DeviceType? DeviceType { get; set; }
+        public DateTime? latestDataDate { get; set;  } = null;
+        public string? latestDataLocation { get; set;  } = null;
 
     }
 }
